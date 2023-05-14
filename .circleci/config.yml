@@ -77,10 +77,11 @@ workflows:
   deploy:
     jobs:
       - build
-      - test
-      - deploy:
+      - test:
           requires:
             - build
+      - deploy:
+          requires:
             - test
           filters:
             branches:
