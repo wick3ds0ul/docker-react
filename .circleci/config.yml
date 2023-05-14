@@ -3,7 +3,7 @@ jobs:
   build_and_test:
     working_directory: /app
     docker:
-      - image: docker:17.05.0-ce-git
+      - image: cimg/node:15.0.1-browsers
     steps:
       - checkout
       - setup_remote_docker
@@ -48,7 +48,7 @@ jobs:
       image: ubuntu-2004:202104-01
       docker_layer_caching: true    # default - false
     docker:
-      - image: docker:17.05.0-ce-git
+      - image: cimg/node:15.0.1-browsers
     steps:
       - setup_remote_docker
       - run:
