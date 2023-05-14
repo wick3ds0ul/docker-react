@@ -56,7 +56,7 @@ jobs:
           working_directory: /
           command: |
             apk add --update
-            apk add install python-pip python-dev build-essential
+            apk add python-pip python-dev build-essential
             pip install awsebcli --upgrade
       - run:
           name: Deploying
