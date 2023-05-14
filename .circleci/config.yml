@@ -38,7 +38,41 @@ jobs:
           key: v1-{{ .Branch }}-{{ epoch }}
           paths:
             - /caches/app.tar
+  test:
+    working_directory: /app
+    steps:
       - run:
-          name: Run tests
+        name: Run tests
+        command: |
+          docker run -e CI=true prabhakarmaity/docker-react:$CIRCLE_SHA1 npm run test:ci
+  deploy:
+    working_directory: /app
+    steps:
+      - run:
+          name: Installing deployment dependencies
+          working_directory: /
           command: |
-            docker run -e CI=true prabhakarmaity/docker-react:$CIRCLE_SHA1 npm run test:ci
+            sudo apt-get -y -qq update
+            sudo apt-get install python-pip python-dev build-essential
+            sudo pip install awsebcli --upgrade
+      # !!! This runs a deployment
+      - run:
+          name: Deploying
+          command: eb deploy docker-react-app
+
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+  deploy:
+    jobs:
+      - deploy:
+          filters:
+            branches:
+              only:
+                - master
