@@ -68,13 +68,10 @@ workflows:
       - build_and_test
   deploy:
     jobs:
-      - build_and_test
-      - test:
-          requires:
-            - build_and_test
+      - build_and_test:
       - deploy:
           requires:
-            - test
+            - build_and_test
           filters:
             branches:
               only:
