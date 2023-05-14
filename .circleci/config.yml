@@ -44,9 +44,9 @@ jobs:
       - image: docker:17.05.0-ce-git
     steps:
       - run:
-        name: Run tests
-        command: |
-          docker run -e CI=true prabhakarmaity/docker-react:$CIRCLE_SHA1 npm run test:ci
+          name: Run tests
+          command: |
+            docker run -e CI=true prabhakarmaity/docker-react:$CIRCLE_SHA1 npm run test:ci
   deploy:
     working_directory: /app
     docker:
