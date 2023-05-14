@@ -40,6 +40,8 @@ jobs:
             - /caches/app.tar
   test:
     working_directory: /app
+    docker:
+      - image: docker:17.05.0-ce-git
     steps:
       - run:
         name: Run tests
@@ -47,6 +49,8 @@ jobs:
           docker run -e CI=true prabhakarmaity/docker-react:$CIRCLE_SHA1 npm run test:ci
   deploy:
     working_directory: /app
+    docker:
+      - image: docker:17.05.0-ce-git
     steps:
       - run:
           name: Installing deployment dependencies
