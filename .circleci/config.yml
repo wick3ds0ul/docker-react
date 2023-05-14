@@ -3,7 +3,7 @@ jobs:
   build_and_test:
     working_directory: /app
     docker:
-      - image: cimg/node:15.0.1-browsers
+      - image: docker:17.05.0-ce-git
     steps:
       - checkout
       - setup_remote_docker
@@ -48,16 +48,16 @@ jobs:
       image: ubuntu-2004:202104-01
       docker_layer_caching: true    # default - false
     docker:
-      - image: cimg/node:15.0.1-browsers
+      - image: docker:17.05.0-ce-git
     steps:
       - setup_remote_docker
       - run:
           name: Installing deployment dependencies
           working_directory: /
           command: |
-            sudo apt-get -y -qq update
-            sudo apt-get install python-pip python-dev build-essential
-            sudo pip install awsebcli --upgrade
+            apk add --update
+            apk add install python-pip python-dev build-essential
+            pip install awsebcli --upgrade
       - run:
           name: Deploying
           command: eb deploy docker-react-app
